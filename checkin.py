@@ -377,7 +377,12 @@ async def main():
 		notify_content = '\n\n'.join([time_info, '\n'.join(notification_content), '\n'.join(summary)])
 
 		print(notify_content)
-		notify.push_message('AnyRouter Check-in Alert', notify_content, msg_type='text')
+		if success_count == total_count:
+			notify.push_message('[OK]AnyRouter Check-in Alert', notify_content, msg_type='text')
+		elif success_count > 0:
+			notify.push_message('[W]AnyRouter Check-in Alert', notify_content, msg_type='text')
+		else:
+			notify.push_message('[E]AnyRouter Check-in Alert', notify_content, msg_type='text')
 		print('[NOTIFY] Notification sent due to failures or balance changes')
 	else:
 		print('[INFO] All accounts successful and no balance changes detected, notification skipped')
